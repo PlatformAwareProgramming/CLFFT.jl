@@ -13,9 +13,10 @@ macro clfft(func, arg_types)
     local args_in  = Symbol[Symbol("arg$i::$T")
                             for (i, T) in enumerate(arg_types.args)]
     local funcname = Symbol("clfft$func")
+    
     @eval begin
-        $(funcname)($(args_in...)) = ccall(($(string(funcname)), libCLFFT),
-                                                 cl.CL_int, #clfftStatus
+        $(funcname)($(args_in...)) = ccall(($(string(funcname)), libclfft),
+                                                 cl.CL_int, 
                                                  $arg_types,
                                                  $(args_in...))
     end
